@@ -5,20 +5,16 @@ guesses_left = 8
 answer = bank.sample
 letters = answer.split("")
 old_guesses = []
-word = {}
-count = 0
-
-letters.each do |x|
-  word[x] = false
-end
+word = Hash.new(false)
+game_over = false
 
 puts "Welcome to hangman!"
 puts "Once you know the whole word, type it in to win!"
 
-while count == 0
+while !game_over
   print "Word: "
   letters.each do |x|
-    if word[x] == true
+    if word[x]
       print x
     else
       print "_"
@@ -43,13 +39,13 @@ while count == 0
       guesses_left -= 1
     end
     if input.length > 1 || guesses_left == 0
-      count = 1
+      game_over = true
     end
   end
 end
 
 if input == answer
   puts "Congratulations! You guessed the word."
-elsif input != answer
+else
   puts "You lose. Better luck next time."
 end
